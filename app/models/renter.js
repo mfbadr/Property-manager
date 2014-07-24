@@ -7,9 +7,7 @@ function Renter(name, age, gender, profession){
   this.profession = profession;
   this.cash = Math.floor((Math.random() * 4901) + 100);
   this.isEvicted = false;
-
 }
-  
 
 Renter.prototype.work = function(){
   switch (this.profession){
@@ -24,12 +22,12 @@ Renter.prototype.work = function(){
       break;
     case 'social worker':
       this.cash += Math.floor((Math.random() * 601) + 150);
-      break;
-    
   }
 };
 
 Renter.prototype.payRent = function(amount){
+  if(this.isEvicted){return;}
+
   amount = parseInt(amount);
   if ( amount > this.cash){
     this.isEvicted = true;
@@ -39,6 +37,7 @@ Renter.prototype.payRent = function(amount){
 };
 
 Renter.prototype.party = function(){
+  if(this.isEvicted){return;}
   var partyamount = Math.floor((Math.random() * 10) + 1);
   if (partyamount > 8){
     this.isEvicted = true;
