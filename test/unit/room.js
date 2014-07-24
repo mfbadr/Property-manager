@@ -10,6 +10,7 @@ describe('Room', function(){
   describe('constructor', function(){
     it('should make a new room with correct attributes', function(){
       var room = new Room('living', '10', '8');
+        expect(room).to.be.instanceof(Room);
         expect(room.name).to.equal('living');
         expect(room.width).to.equal(10);
         expect(room.length).to.equal(8);
