@@ -28,4 +28,21 @@ Renter.prototype.work = function(){
     
   }
 };
+
+Renter.prototype.payRent = function(amount){
+  amount = parseInt(amount);
+  if ( amount > this.cash){
+    this.isEvicted = true;
+  }else{
+    this.cash -= amount;
+  }
+};
+
+Renter.prototype.party = function(){
+  var partyamount = Math.floor((Math.random() * 10) + 1);
+  if (partyamount > 8){
+    this.isEvicted = true;
+  }
+};
+
 module.exports = Renter;

@@ -25,4 +25,31 @@ describe('Renter', function(){
       expect(bob.cash).to.be.within(50, 250);
     });
   });
+  describe('#payRent', function(){
+    it('should subtract rent amount from cash', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      bob.cash = 1000;
+      bob.payRent(500);
+      expect(bob.cash).to.equal(500);
+    });
+    it('should not subtract and evict if not enough cash', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      bob.cash = 50;
+      bob.payRent(500);
+      expect(bob.cash).to.equal(50);
+      expect(bob.isEvicted).to.be.true;
+    });
+  });
+  describe('#party', function(){
+    it('should evict the renter is party is too loud', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var partycount = 0;
+      while(bob.isEvicted === false){
+        bob.party();
+        partycount++;
+      }
+      expect(bob.isEvicted).to.be.true;
+      console.log('The test threw ' + partycount + ' parties before getting evicted');
+    });
+  });
 });
