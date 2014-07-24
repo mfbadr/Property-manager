@@ -23,6 +23,21 @@ describe('Renter', function(){
       bob.cash = 0;
       bob.work();
       expect(bob.cash).to.be.within(50, 250);
+
+      var bob1 = new Renter('bob', '31', 'male', 'coder');
+      bob1.cash = 0;
+      bob1.work();
+      expect(bob1.cash).to.be.within(1000, 7000);
+
+      var bob2 = new Renter('bob', '31', 'male', 'movie star');
+      bob2.cash = 0;
+      bob2.work();
+      expect(bob2.cash).to.be.within(3000, 10000);
+      
+      var bob3 = new Renter('bob', '31', 'male', 'social worker');
+      bob3.cash = 0;
+      bob3.work();
+      expect(bob3.cash).to.be.within(150, 750);
     });
   });
   describe('#payRent', function(){
