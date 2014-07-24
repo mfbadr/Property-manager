@@ -7,7 +7,7 @@ var Apartment;
 var Room = require('../../app/models/room');
 var Mongo = require('mongodb');
 var connect = require('../../app/lib/mongodb');
-var a1, a2, a3
+var a1, a2, a3;
 
 describe('Apartment', function(){
   before(function(done){
@@ -55,25 +55,25 @@ describe('Apartment', function(){
   }); 
   describe('#area', function(){
     it('should sum area of all rooms', function(){
-      var A1= new Apartment('A1');
-      var r1 = new Room('living room', 8, 10); 
-      var r2 = new Room('bedroom', 12, 10); 
-      var r3 = new Room('dining room', 10, 15); 
-
-      A1.rooms.push(r1 ,r2 ,r3);
-      expect(A1.area()).to.equal(350);
+//      var A1= new Apartment('A1');
+//      var r1 = new Room('living room', 8, 10); 
+//      var r2 = new Room('bedroom', 12, 10); 
+//      var r3 = new Room('dining room', 10, 15); 
+//      A1.rooms.push(r1 ,r2 ,r3);
+      expect(a1.area()).to.equal(350);
     });
   });
   describe('#cost', function(){
     it('should sum the cost of all rooms', function(){
-      var A1= new Apartment('A1');
-      var r1 = new Room('living room', 8, 10); 
-      var r2 = new Room('bedroom', 12, 10); 
-      var r3 = new Room('dining room', 10, 15); 
-
-      A1.rooms.push(r1 ,r2 ,r3);
-      expect(A1.cost()).to.equal(350* 5);
+//      var A1= new Apartment('A1');
+//      var r1 = new Room('living room', 8, 10); 
+//      var r2 = new Room('bedroom', 12, 10); 
+//      var r3 = new Room('dining room', 10, 15); 
+//
+//      A1.rooms.push(r1 ,r2 ,r3);
+      expect(a1.cost()).to.equal(350* 5);
     });
   });
+ 
 });
 
