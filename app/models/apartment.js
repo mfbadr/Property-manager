@@ -1,6 +1,6 @@
 'use strict';
 
-// var cAppts = global.mongodb.collection('apartments');
+var cAppts = global.mongodb.collection('apartments');
 // var Renter = require('./renter');
 
 function Apartment(name){
@@ -57,4 +57,9 @@ Apartment.prototype.collectRent = function(){
   }
 };
 
+Apartment.prototype.save = function(cb){
+  cAppts.save(this, function(err, object){
+    cb();
+  });
+};
 module.exports = Apartment;
