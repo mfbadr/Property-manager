@@ -103,7 +103,20 @@ describe('Apartment', function(){
       expect(a2.renters.length).to.equal(2);
       a2.purgeEvicted();
       expect(a2.renters.length).to.equal(1);
-      
+    });
+  });
+  describe('#collectRent', function(){
+    it('should charge renters rent if they have enough', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob1 = new Renter('bob', '31', 'male', 'waiter');
+      bob.cash = 1000;
+      bob1.cash = 1500;
+      a2.renters.push(bob, bob1);
+      a2.collectRent(); // a2.area = 500, a2.cost = 2500, a2.cost/renters.lenngth = 1250
+      expect(bob.cash).to.equal(1000);
+      expect(bob1.cash).to.equal(250);
+      expect(bob.isEvicted).to.be.true;
+      expect(bob1.isEvicted).to.be.false;
     });
   });
 });

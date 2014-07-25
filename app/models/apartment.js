@@ -1,6 +1,7 @@
 'use strict';
 
 // var cAppts = global.mongodb.collection('apartments');
+// var Renter = require('./renter');
 
 
 function Apartment(name){
@@ -48,6 +49,13 @@ Apartment.prototype.purgeEvicted = function(){
     }
   }
   this.renters = notEvicted;
+};
+
+Apartment.prototype.collectRent = function(){
+  var amount = (this.cost()/this.renters.length);
+  for( var i = 0; i < this.renters.length; i++){
+   this.renters[i].payRent(amount); 
+  }
 };
 
 module.exports = Apartment;
