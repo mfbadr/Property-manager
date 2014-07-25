@@ -5,7 +5,7 @@
 var expect = require('chai').expect;
 var Apartment;
 var Room = require('../../app/models/room');
-// var Mongo = require('mongodb');
+var Mongo = require('mongodb');
 var connect = require('../../app/lib/mongodb');
 var Renter = require('../../app/models/renter');
 var a1, a2, a3;
@@ -117,6 +117,23 @@ describe('Apartment', function(){
       expect(bob1.cash).to.equal(250);
       expect(bob.isEvicted).to.be.true;
       expect(bob1.isEvicted).to.be.false;
+    });
+  });
+  describe('#isAvailable', function(){
+    it('should return bedrooms() - renters.length', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      a2.renters.push(bob);
+      expect(a2.isAvailable()).to.be.true;
+    });
+  });
+  describe('#save', function(){
+    it('should save a new appt to the appt db' , function(done){
+
+      var a4  = new Apartment('A4');
+      a4.save( function(){
+        expect(a4._id).to.be.instanceof(Mongo.ObjectID);
+        done();
+      });
     });
   });
 });
