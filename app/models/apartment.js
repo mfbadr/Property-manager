@@ -68,7 +68,7 @@ Apartment.prototype.save = function(cb){
 Apartment.find = function( query, cb){
   cAppts.find(query).toArray( function(err, object){
     for (var i =0; i < object.length; i++){
-    object[i] = reProto(object[i]);
+      object[i] = reProto(object[i]);
     }
     cb(object);
   });
@@ -96,6 +96,27 @@ Apartment.area = function(cb){
   });
 };
 
+Apartment.cost = function(cb){
+  Apartment.find({}, function(appts){
+    var sum = 0;
+    for(var i = 0; i < appts.length; i++){
+      sum += appts[i].cost();
+    }
+    cb(sum);
+  });
+};
+
+Apartment.tenants = function(cb){
+  Apartment.find({}, function(appts){
+    var totalTenants = 0;
+    for( var i = 0; i < appts.length; i++){
+      totalTenants += appts[i].renters.length;
+      console.log(appts[i].renters);
+    }
+    console.log(totalTenants);
+    cb(totalTenants);
+  });
+};
 
 // HELPER FUNCTIONS //
 // make a helper function to restory protoypes to renters and rooms
