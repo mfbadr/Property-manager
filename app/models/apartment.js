@@ -77,6 +77,7 @@ Apartment.find = function( query, cb){
 };
 
 Apartment.findbyID = function( query, cb){
+  query = (typeof id === 'string') ? Mongo.ObjectID(query) : query;
   cAppts.findOne(query, function(err, object){
     cb(object);
   });
