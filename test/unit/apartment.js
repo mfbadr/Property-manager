@@ -121,7 +121,7 @@ describe('Apartment', function(){
     });
   });
   describe('#isAvailable', function(){
-    it('should return bedrooms() - renters.length', function(){
+    it('should return true if  bedrooms() - renters.length', function(){
       var bob = new Renter('bob', '31', 'male', 'waiter');
       a2.renters.push(bob);
       expect(a2.isAvailable()).to.be.true;
@@ -173,6 +173,37 @@ describe('Apartment', function(){
       Apartment.area(function(totalArea){
         expect(totalArea).to.equal(1200);
         done();
+      });
+    });
+  });
+  describe('.cost', function(){
+    it('should return the total cost of all appts', function(done){
+      Apartment.cost(function(totalCost){
+        expect(totalCost).to.equal(1200 * 5);
+        done();
+      });
+    });
+  });
+  describe('.tenants', function(){
+    it('should return the total number of tenants in all appts', function(done){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob1 = new Renter('bob', '31', 'male', 'waiter');
+      a1.renters.push(bob, bob1);
+      var bob3 = new Renter('bob', '31', 'male', 'waiter');
+      var bob4 = new Renter('bob', '31', 'male', 'waiter');
+      a2.renters.push(bob3, bob4);
+      var bob5 = new Renter('bob', '31', 'male', 'waiter');
+      var bob6 = new Renter('bob', '31', 'male', 'waiter');
+      a3.renters.push(bob5, bob6);
+      a1.save( function(){
+        a2.save( function(){
+          a3.save( function(){
+            Apartment.tenants(function(sum){
+              expect(sum).to.equal(6);
+              done();
+            });
+          });
+        });
       });
     });
   });

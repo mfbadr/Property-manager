@@ -96,6 +96,25 @@ Apartment.area = function(cb){
   });
 };
 
+Apartment.cost = function(cb){
+  Apartment.find({}, function(appts){
+    var sum = 0;
+    for(var i = 0; i < appts.length; i++){
+      sum += appts[i].cost();
+    }
+    cb(sum);
+  });
+};
+
+Apartment.tenants = function(cb){
+  Apartment.find({}, function(appts){
+    var totalTenants = 0;
+    for( var i = 0; i < appts.length; i++){
+      totalTenants += appts[i].renters.length;
+    }
+    cb(totalTenants);
+  });
+};
 
 // HELPER FUNCTIONS //
 // make a helper function to restory protoypes to renters and rooms
