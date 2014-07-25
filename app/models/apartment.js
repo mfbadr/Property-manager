@@ -76,4 +76,11 @@ Apartment.findbyID = function( query, cb){
   });
 };
 
+Apartment.deletebyID = function ( id, cb){
+  
+  cAppts.remove( {_id : id}, function(){
+    cb();
+  });
+};
+
 module.exports = Apartment;
