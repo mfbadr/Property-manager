@@ -155,5 +155,17 @@ describe('Apartment', function(){
       });
     });
   });
+  describe('.deletebyID', function(){
+    it('should delete one appt', function(done){
+      Apartment.find({}, function(appts){
+        Apartment.deletebyID( appts[0]._id, function(){
+          Apartment.find({}, function(appts2){
+            expect(appts2).to.have.length(2);
+            done();
+          });
+        });
+      });
+    });
+  });
 });
 
