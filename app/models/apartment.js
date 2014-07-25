@@ -62,4 +62,11 @@ Apartment.prototype.save = function(cb){
     cb();
   });
 };
+
+Apartment.find = function( query, cb){
+  cAppts.find(query).toArray( function(err, object){
+    cb(object);
+  });
+};
+
 module.exports = Apartment;
