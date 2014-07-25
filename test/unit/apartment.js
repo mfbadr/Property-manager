@@ -207,5 +207,28 @@ describe('Apartment', function(){
       });
     });
   });
+  describe('.revenue', function(){
+    it('should pass the total rent of apartment in array', function(done){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob1 = new Renter('bob', '31', 'male', 'waiter');
+      a1.renters.push(bob, bob1);
+      var bob3 = new Renter('bob', '31', 'male', 'waiter');
+      var bob4 = new Renter('bob', '31', 'male', 'waiter');
+      a2.renters.push(bob3, bob4);
+      a1.save( function(){
+        a2.save( function(){
+          a3.save( function(){
+            Apartment.revenue( function (rev) {
+     //         console.log(a1.cost());
+     //         console.log(a2.cost());
+     //         console.log(a1.renters, a2.renters, a3.renters);
+              expect(rev).to.equal(4250);
+              done();
+            });
+          });
+        });
+      }); 
+    });
+  });
 });
 
