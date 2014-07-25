@@ -5,9 +5,10 @@
 var expect = require('chai').expect;
 var Apartment;
 var Room = require('../../app/models/room');
-var Mongo = require('mongodb');
+// var Mongo = require('mongodb');
 var connect = require('../../app/lib/mongodb');
-var a1, a2, a3
+var Renter = require('../../app/models/renter');
+var a1, a2, a3;
 
 describe('Apartment', function(){
   before(function(done){
@@ -29,7 +30,8 @@ describe('Apartment', function(){
       var r21 = new Room('living room', 8, 10); 
       var r22 = new Room('bedroom', 12, 10); 
       var r23 = new Room('dining room', 10, 15); 
-      a2.rooms.push(r21 ,r22 ,r23);
+      var r24 = new Room('bedroom', 10, 15); 
+      a2.rooms.push(r21 ,r22 ,r23, r24);
      
       a3  = new Apartment('A3');
       var r31 = new Room('living room', 8, 10); 
@@ -55,24 +57,53 @@ describe('Apartment', function(){
   }); 
   describe('#area', function(){
     it('should sum area of all rooms', function(){
-      var A1= new Apartment('A1');
-      var r1 = new Room('living room', 8, 10); 
-      var r2 = new Room('bedroom', 12, 10); 
-      var r3 = new Room('dining room', 10, 15); 
-
-      A1.rooms.push(r1 ,r2 ,r3);
-      expect(A1.area()).to.equal(350);
+//      var A1= new Apartment('A1');
+//      var r1 = new Room('living room', 8, 10); 
+//      var r2 = new Room('bedroom', 12, 10); 
+//      var r3 = new Room('dining room', 10, 15); 
+//      A1.rooms.push(r1 ,r2 ,r3);
+      expect(a1.area()).to.equal(350);
     });
   });
   describe('#cost', function(){
     it('should sum the cost of all rooms', function(){
-      var A1= new Apartment('A1');
-      var r1 = new Room('living room', 8, 10); 
-      var r2 = new Room('bedroom', 12, 10); 
-      var r3 = new Room('dining room', 10, 15); 
-
-      A1.rooms.push(r1 ,r2 ,r3);
-      expect(A1.cost()).to.equal(350* 5);
+//      var A1= new Apartment('A1');
+//      var r1 = new Room('living room', 8, 10); 
+//      var r2 = new Room('bedroom', 12, 10); 
+//      var r3 = new Room('dining room', 10, 15); 
+//
+//      A1.rooms.push(r1 ,r2 ,r3);
+      expect(a1.cost()).to.equal(350* 5);
+    });
+  });
+  describe('#bedrooms', function(){
+    it('should count the bedrooms in an appt and return a number', function(){
+      expect(a2.bedrooms()).to.equal(2);
+    });
+  });
+  describe('#isAvailable', function(){
+    it('should be true if bedrooms > renters', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      a2.renters.push(bob);
+      expect(a2.isAvailable()).to.be.true;
+    });
+    it('should be false if bedrooms < renters', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      a1.renters.push(bob);
+      expect(a1.isAvailable()).to.be.false;
+      
+    });
+  });
+  describe('#purgeEvicted', function(){
+    it('should purge renters who are evicted', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob1 = new Renter('bob', '31', 'male', 'waiter');
+      bob1.isEvicted = true;
+      a2.renters.push(bob, bob1);
+      expect(a2.renters.length).to.equal(2);
+      a2.purgeEvicted();
+      expect(a2.renters.length).to.equal(1);
+      
     });
   });
 });

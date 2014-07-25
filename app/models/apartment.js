@@ -1,6 +1,6 @@
 'use strict';
 
-var cAppts = global.mongodb.collection('apartments');
+// var cAppts = global.mongodb.collection('apartments');
 
 
 function Apartment(name){
@@ -23,6 +23,31 @@ Apartment.prototype.cost = function(){
     apptCost += this.rooms[i].cost();
   }
   return apptCost;
+};
+
+Apartment.prototype.bedrooms = function(){
+  var bedroomCount = 0;
+  for( var i = 0; i < this.rooms.length; i++){
+    if( this.rooms[i].name === 'bedroom') { bedroomCount++;
+    } 
+  }
+  return bedroomCount;
+};
+
+Apartment.prototype.isAvailable = function(){
+  if( this.bedrooms() > this.renters.length){return true;
+  }else{return false;
+  }
+};
+
+Apartment.prototype.purgeEvicted = function(){
+  var notEvicted = [];
+  for( var i = 0; i < this.renters.length; i++){
+    if( this.renters[i].isEvicted === false){
+      notEvicted.push(this.renters[i]);
+    }
+  }
+  this.renters = notEvicted;
 };
 
 module.exports = Apartment;
