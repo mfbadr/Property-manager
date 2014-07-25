@@ -5,8 +5,9 @@
 var expect = require('chai').expect;
 var Apartment;
 var Room = require('../../app/models/room');
-var Mongo = require('mongodb');
+// var Mongo = require('mongodb');
 var connect = require('../../app/lib/mongodb');
+var Renter = require('../../app/models/renter');
 var a1, a2, a3;
 
 describe('Apartment', function(){
@@ -29,7 +30,8 @@ describe('Apartment', function(){
       var r21 = new Room('living room', 8, 10); 
       var r22 = new Room('bedroom', 12, 10); 
       var r23 = new Room('dining room', 10, 15); 
-      a2.rooms.push(r21 ,r22 ,r23);
+      var r24 = new Room('bedroom', 10, 15); 
+      a2.rooms.push(r21 ,r22 ,r23, r24);
      
       a3  = new Apartment('A3');
       var r31 = new Room('living room', 8, 10); 
@@ -74,6 +76,18 @@ describe('Apartment', function(){
       expect(a1.cost()).to.equal(350* 5);
     });
   });
- 
+  describe('#bedrooms', function(){
+    it('should count the bedrooms in an appt and return a number', function(){
+      expect(a2.bedrooms()).to.equal(2);
+    });
+  });
+  describe('#isAvailable', function(){
+    it('should return bedrooms() - renters.length', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      a2.renters.push(bob);
+      expect(a2.isAvailable()).to.be.true;
+    });
+  
+  });
 });
 
