@@ -53,9 +53,11 @@ Apartment.prototype.purgeEvicted = function(){
 };
 
 Apartment.prototype.collectRent = function(){
+  if(!this.renters.length){return 0;}
   var amount = (this.cost()/this.renters.length);
+  var collected = 0;
   for( var i = 0; i < this.renters.length; i++){
-   this.renters[i].payRent(amount); 
+   collected += this.renters[i].payRent(amount); 
   }
 };
 
@@ -143,7 +145,6 @@ function reProto(apt){
   for( i = 0; i < apt.renters.length; i++){
     apt.renters[i] = _.create(Renter.prototype, apt.renters[i]);
   }
-
   apt = _.create(Apartment.prototype, apt);
   return apt;
 }

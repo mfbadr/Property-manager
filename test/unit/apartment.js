@@ -2,7 +2,7 @@
 /* global describe, it, before, beforeEach */
 'use strict';
 
-//var cAppts = global.mongodv.collection('apartments');
+////var cAppts = global.mongodv.collection('apartments');
 var expect = require('chai').expect;
 var Apartment;
 var Room = require('../../app/models/room');
@@ -58,22 +58,11 @@ describe('Apartment', function(){
   }); 
   describe('#area', function(){
     it('should sum area of all rooms', function(){
-//      var A1= new Apartment('A1');
-//      var r1 = new Room('living room', 8, 10); 
-//      var r2 = new Room('bedroom', 12, 10); 
-//      var r3 = new Room('dining room', 10, 15); 
-//      A1.rooms.push(r1 ,r2 ,r3);
       expect(a1.area()).to.equal(350);
     });
   });
   describe('#cost', function(){
     it('should sum the cost of all rooms', function(){
-//      var A1= new Apartment('A1');
-//      var r1 = new Room('living room', 8, 10); 
-//      var r2 = new Room('bedroom', 12, 10); 
-//      var r3 = new Room('dining room', 10, 15); 
-//
-//      A1.rooms.push(r1 ,r2 ,r3);
       expect(a1.cost()).to.equal(350* 5);
     });
   });
@@ -92,7 +81,6 @@ describe('Apartment', function(){
       var bob = new Renter('bob', '31', 'male', 'waiter');
       a1.renters.push(bob);
       expect(a1.isAvailable()).to.be.false;
-      
     });
   });
   describe('#purgeEvicted', function(){
@@ -129,7 +117,6 @@ describe('Apartment', function(){
   });
   describe('#save', function(){
     it('should save a new appt to the appt db' , function(done){
-
       var a4  = new Apartment('A4');
       a4.save( function(){
         expect(a4._id).to.be.instanceof(Mongo.ObjectID);
@@ -219,9 +206,6 @@ describe('Apartment', function(){
         a2.save( function(){
           a3.save( function(){
             Apartment.revenue( function (rev) {
-     //         console.log(a1.cost());
-     //         console.log(a2.cost());
-     //         console.log(a1.renters, a2.renters, a3.renters);
               expect(rev).to.equal(4250);
               done();
             });

@@ -33,6 +33,7 @@ Renter.prototype.payRent = function(amount){
     this.isEvicted = true;
   }else{
     this.cash -= amount;
+    return amount;
   }
 };
 
