@@ -116,6 +116,20 @@ Apartment.tenants = function(cb){
   });
 };
 
+Apartment.revenue = function(cb){
+  Apartment.find( {}, function(appts){
+    var sum = 0;
+    for( var i = 0; i < appts.length; i++){
+      if( appts[i].renters.length > 0) {
+        sum += appts[i].cost();
+   //     console.log(appts[i].cost());
+      }
+    }
+    cb(sum);
+  });
+
+};
+
 // HELPER FUNCTIONS //
 // make a helper function to restory protoypes to renters and rooms
 // cant do area without it 
