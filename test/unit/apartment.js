@@ -141,6 +141,7 @@ describe('Apartment', function(){
     it('should find all appts', function(done){
       Apartment.find( {},function(appts){
         expect(appts).to.have.length(3);
+        expect(appts).to.be.an.Array;
         done();
       });
     });
@@ -164,6 +165,14 @@ describe('Apartment', function(){
             done();
           });
         });
+      });
+    });
+  });
+  describe('.area', function(){
+    it('should return the total area of all appts', function(done){
+      Apartment.area(function(totalArea){
+        expect(totalArea).to.equal(1200);
+        done();
       });
     });
   });
