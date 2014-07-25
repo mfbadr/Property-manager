@@ -82,6 +82,44 @@ describe('Apartment', function(){
     });
   });
   describe('#isAvailable', function(){
+    it('should be true if bedrooms > renters', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      a2.renters.push(bob);
+      expect(a2.isAvailable()).to.be.true;
+    });
+    it('should be false if bedrooms < renters', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      a1.renters.push(bob);
+      expect(a1.isAvailable()).to.be.false;
+      
+    });
+  });
+  describe('#purgeEvicted', function(){
+    it('should purge renters who are evicted', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob1 = new Renter('bob', '31', 'male', 'waiter');
+      bob1.isEvicted = true;
+      a2.renters.push(bob, bob1);
+      expect(a2.renters.length).to.equal(2);
+      a2.purgeEvicted();
+      expect(a2.renters.length).to.equal(1);
+    });
+  });
+  describe('#collectRent', function(){
+    it('should charge renters rent if they have enough', function(){
+      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob1 = new Renter('bob', '31', 'male', 'waiter');
+      bob.cash = 1000;
+      bob1.cash = 1500;
+      a2.renters.push(bob, bob1);
+      a2.collectRent(); // a2.area = 500, a2.cost = 2500, a2.cost/renters.lenngth = 1250
+      expect(bob.cash).to.equal(1000);
+      expect(bob1.cash).to.equal(250);
+      expect(bob.isEvicted).to.be.true;
+      expect(bob1.isEvicted).to.be.false;
+    });
+  });
+  describe('#isAvailable', function(){
     it('should return bedrooms() - renters.length', function(){
       var bob = new Renter('bob', '31', 'male', 'waiter');
       a2.renters.push(bob);
