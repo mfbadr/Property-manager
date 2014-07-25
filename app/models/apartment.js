@@ -1,8 +1,9 @@
 'use strict';
 
 var cAppts = global.mongodb.collection('apartments');
-// var Renter = require('./renter');
-
+var Renter = require('./renter');
+var _ = require('lodash');
+var Room = require('./room');
 
 function Apartment(name){
   this.name = name;
@@ -66,6 +67,9 @@ Apartment.prototype.save = function(cb){
 
 Apartment.find = function( query, cb){
   cAppts.find(query).toArray( function(err, object){
+    for (var i =0; i < object.length; i++){
+    object[i] = reProto(object[i]);
+    }
     cb(object);
   });
 };
@@ -77,10 +81,39 @@ Apartment.findbyID = function( query, cb){
 };
 
 Apartment.deletebyID = function ( id, cb){
-  
   cAppts.remove( {_id : id}, function(){
     cb();
   });
 };
+
+Apartment.area = function(cb){
+  Apartment.find({}, function(appts){
+    var sum = 0;
+    for(var i = 0; i < appts.length; i++){
+      sum += appts[i].area();
+    }
+    cb(sum);
+  });
+};
+
+
+// HELPER FUNCTIONS //
+// make a helper function to restory protoypes to renters and rooms
+// cant do area without it 
+
+function reProto(apt){
+//  apt.rooms
+  for(var i = 0; i < apt.rooms.length; i++){
+    apt.rooms[i] = _.create(Room.prototype, apt.rooms[i]);
+  }
+//  apt.renters
+  for( i = 0; i < apt.renters.length; i++){
+    apt.renters[i] = _.create(Renter.prototype, apt.renters[i]);
+  }
+
+  apt = _.create(Apartment.prototype, apt);
+  return apt;
+}
+
 
 module.exports = Apartment;
