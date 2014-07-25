@@ -2,6 +2,7 @@
 /* global describe, it, before, beforeEach */
 'use strict';
 
+//var cAppts = global.mongodv.collection('apartments');
 var expect = require('chai').expect;
 var Apartment;
 var Room = require('../../app/models/room');
@@ -141,6 +142,16 @@ describe('Apartment', function(){
       Apartment.find( {},function(appts){
         expect(appts).to.have.length(3);
         done();
+      });
+    });
+  });
+  describe('.findbyID', function(){
+    it('should find 1 appt', function(done){
+      Apartment.find({}, function(apts){
+        Apartment.findbyID(apts[0]._id, function(apt){
+          expect(apt.name).to.equal( 'A1');
+          done();
+        });
       });
     });
   });

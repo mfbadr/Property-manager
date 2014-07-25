@@ -69,4 +69,10 @@ Apartment.find = function( query, cb){
   });
 };
 
+Apartment.findbyID = function( query, cb){
+  cAppts.findOne(query, function(err, object){
+    cb(object);
+  });
+};
+
 module.exports = Apartment;
