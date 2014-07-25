@@ -83,7 +83,7 @@ describe('Apartment', function(){
   });
   describe('#isAvailable', function(){
     it('should be true if bedrooms > renters', function(){
-      var bob = new Renter('bob', '31', 'male', 'waiter');
+      var bob = new Renter('bob', '31', 'male',  'waiter');
       a2.renters.push(bob);
       expect(a2.isAvailable()).to.be.true;
     });
@@ -132,6 +132,14 @@ describe('Apartment', function(){
       var a4  = new Apartment('A4');
       a4.save( function(){
         expect(a4._id).to.be.instanceof(Mongo.ObjectID);
+        done();
+      });
+    });
+  });
+  describe('.find', function(){
+    it('should find all appts', function(done){
+      Apartment.find( {},function(appts){
+        expect(appts).to.have.length(3);
         done();
       });
     });
