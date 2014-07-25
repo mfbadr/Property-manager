@@ -111,9 +111,7 @@ Apartment.tenants = function(cb){
     var totalTenants = 0;
     for( var i = 0; i < appts.length; i++){
       totalTenants += appts[i].renters.length;
-      console.log(appts[i].renters);
     }
-    console.log(totalTenants);
     cb(totalTenants);
   });
 };

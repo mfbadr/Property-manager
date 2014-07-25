@@ -189,8 +189,6 @@ describe('Apartment', function(){
       var bob = new Renter('bob', '31', 'male', 'waiter');
       var bob1 = new Renter('bob', '31', 'male', 'waiter');
       a1.renters.push(bob, bob1);
-      console.log(a1.renters[0]);
-      console.log(a1.renters.length);
       var bob3 = new Renter('bob', '31', 'male', 'waiter');
       var bob4 = new Renter('bob', '31', 'male', 'waiter');
       a2.renters.push(bob3, bob4);
